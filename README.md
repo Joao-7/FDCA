@@ -1,13 +1,6 @@
-# Projeto FDCA 
+# Projeto FDCA - Fila Digital do Centro de Aprendizagem 
 
-Este é o repositório do **Projeto FDCA**, um sistema web desenvolvido em Python utilizando o framework **Django**.
-
-## Tecnologias Utilizadas
-
-*   **Python 3.x**
-*   **Django 5.x** 
-*   **SQLite** 
-*   **Python-dotenv** 
+Este projeto é uma aplicação web desenvolvida como trabalho prático para a disciplina de **Programação para Internet**. O objetivo do sistema é modernizar, organizar e gerenciar o atendimento dos alunos no Centro de Aprendizagem através de uma **Fila Digital**.
 
 ---
 
