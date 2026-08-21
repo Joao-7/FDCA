@@ -18,7 +18,7 @@ Como as dependências do ambiente virtual (`.venv`), as senhas (`.env`) e o banc
 ### 1. Clonar o repositório
 Abra o seu terminal e clone o projeto:
 ```bash
-git clone https://github.com
+git clone https://github.com/Joao-7/FDCA.git
 cd FDCA
 ```
 
