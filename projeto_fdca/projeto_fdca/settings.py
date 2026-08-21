@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env') 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_login'
+    'app_login',
 ]
 
 MIDDLEWARE = [
@@ -58,9 +58,8 @@ ROOT_URLCONF = 'projeto_fdca.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-         'DIRS': [
+        'DIRS': [
             BASE_DIR / 'templates',
-            BASE_DIR / 'app_login' / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

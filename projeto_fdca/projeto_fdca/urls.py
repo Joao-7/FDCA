@@ -20,6 +20,5 @@ from app_login.views import pagina_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', pagina_login, name='login')
+    path('', pagina_login),
 ]
-
