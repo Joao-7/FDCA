@@ -1,13 +1,13 @@
 # Projeto FDCA 
 
-Este é o repositório do **Projeto FDCA**, um sistema web desenvolvido em Python utilizando o framework **Django**. O projeto conta com um sistema completo de autenticação isolado no aplicativo `app_login`.
+Este é o repositório do **Projeto FDCA**, um sistema web desenvolvido em Python utilizando o framework **Django**.
 
 ## Tecnologias Utilizadas
 
 *   **Python 3.x**
-*   **Django 5.x** (Framework Web Backend)
-*   **SQLite** (Banco de dados padrão para desenvolvimento)
-*   **Python-dotenv** (Gerenciamento seguro de variáveis de ambiente)
+*   **Django 5.x** 
+*   **SQLite** 
+*   **Python-dotenv** 
 
 ---
 
