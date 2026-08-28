@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app_login.views import pagina_login
+from conta.views import pagina_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', pagina_login),
+    path('', pagina_login, name='login'),
 ]
