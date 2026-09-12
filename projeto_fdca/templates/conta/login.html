@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<title>FDCA - Login</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">
+        <svg viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+    </div>
+    <h1>FDCA</h1>
+    <p class="subtitle">Fila Digital do Centro de Aprendizagem</p>
+
+    <div class="card">
+
+        {% if form.non_field_errors %}
+            <div class="error">{{ form.non_field_errors.0 }}</div>
+        {% endif %}
+
+        <div class="tabs">
+            <button type="button" class="tab active" data-perfil="aluno" onclick="selecionarPerfil('aluno', this)">Aluno</button>
+            <button type="button" class="tab" data-perfil="professor" onclick="selecionarPerfil('professor', this)">Professor</button>
+        </div>
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="perfil" id="perfil" value="aluno">
+
+            <label id="label-identificador">Matrícula ou e-mail</label>
+            <input type="text" name="identificador" id="identificador"
+                   placeholder="Ex: 20241164010000" autofocus autocomplete="username" required>
+
+            <label>Senha</label>
+            <input type="password" name="senha" placeholder="••••••••" autocomplete="current-password" required>
+
+            <button type="submit" class="entrar">Entrar</button>
+        </form>
+    </div>
+
+    <p class="footer">Instituto Federal do Rio Grande do Norte &middot; Sistema FDCA v1.0</p>
+</div>
+
+<script>
+    function selecionarPerfil(perfil, botao) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        botao.classList.add('active');
+        document.getElementById('perfil').value = perfil;
+
+        const label = document.getElementById('label-identificador');
+        const input = document.getElementById('identificador');
+
+        if (perfil === 'professor') {
+            label.textContent = 'E-mail institucional';
+            input.placeholder = 'Ex: professor@ifrn.edu.br';
+        } else {
+            label.textContent = 'Matrícula ou e-mail';
+            input.placeholder = 'Ex: 20241164010000';
+        }
+    }
+</script>
+
+</body>
+</html>
