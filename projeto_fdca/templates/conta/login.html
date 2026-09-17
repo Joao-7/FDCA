@@ -1,13 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-<title>FDCA - Login</title>
-</head>
-<body>
+
+{% block title %}FDCA - Login{% endblock %}
+
+{% block content %}
 
 <div class="container">
     <div class="logo">
@@ -45,24 +41,8 @@
     <p class="footer">Instituto Federal do Rio Grande do Norte &middot; Sistema FDCA v1.0</p>
 </div>
 
-<script>
-    function selecionarPerfil(perfil, botao) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        botao.classList.add('active');
-        document.getElementById('perfil').value = perfil;
+{% endblock %}
 
-        const label = document.getElementById('label-identificador');
-        const input = document.getElementById('identificador');
-
-        if (perfil === 'professor') {
-            label.textContent = 'E-mail institucional';
-            input.placeholder = 'Ex: professor@ifrn.edu.br';
-        } else {
-            label.textContent = 'Matrícula ou e-mail';
-            input.placeholder = 'Ex: 20241164010000';
-        }
-    }
-</script>
-
-</body>
-</html>
+{% block scripts %}
+    <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
