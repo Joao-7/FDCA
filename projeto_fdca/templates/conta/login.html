@@ -23,7 +23,7 @@
             <button type="button" class="tab" data-perfil="professor" onclick="selecionarPerfil('professor', this)">Professor</button>
         </div>
 
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'painel_aluno' %}">
             {% csrf_token %}
             <input type="hidden" name="perfil" id="perfil" value="aluno">
 
@@ -44,5 +44,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/login.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
