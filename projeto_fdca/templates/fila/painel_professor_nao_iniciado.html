@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Painel · Proj. Dev. Software INFO-1M{% endblock %}
+
+{% block content %}
+<main class="container" style="max-width:760px">
+  <a class="back" href="{% url 'grade_professor' %}">&larr; Voltar para Minha Grade</a>
+
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">INFO-1M</div>
+      <h1>Proj. Dev. Software</h1>
+      <span class="status">Atendimento não iniciado</span>
+    </div>
+    <div style="text-align:right">
+      <div class="counter">4/10</div>
+      <div class="small muted">dúvidas recebidas</div>
+    </div>
+  </div>
+
+  <section class="card">
+    <ul class="queue">
+      <li>
+        <span class="queue__pos">1</span>
+        <div class="queue__body">
+          <div class="queue__nome">Ana Beatriz <span class="tag">Enviada antecipadamente</span></div>
+          <div class="queue__duvida">Como declarar uma classe em Java?</div>
+        </div>
+      </li>
+      <li>
+        <span class="queue__pos">2</span>
+        <div class="queue__body">
+          <div class="queue__nome">Carlos Eduardo <span class="tag">Enviada antecipadamente</span></div>
+          <div class="queue__duvida">Diferença entre classe e objeto.</div>
+        </div>
+      </li>
+      <li>
+        <span class="queue__pos">3</span>
+        <div class="queue__body">
+          <div class="queue__nome">Fernanda Alves <span class="tag">Enviada antecipadamente</span></div>
+          <div class="queue__duvida">Erro ao compilar o projeto no IDE.</div>
+        </div>
+      </li>
+      <li>
+        <span class="queue__pos">4</span>
+        <div class="queue__body">
+          <div class="queue__nome">Gabriel Costa <span class="tag">Enviada antecipadamente</span></div>
+          <div class="queue__duvida">Como funciona o construtor?</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <form method="post" class="actions">
+    {% csrf_token %}
+    <button class="btn btn--primary" type="submit" name="acao" value="iniciar">Iniciar atendimento</button>
+  </form>
+</main>
+{% endblock %}

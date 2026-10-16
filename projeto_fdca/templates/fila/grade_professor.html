@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{%load static%}
+{% block title %}Minha Grade (Professor) · FDCA{% endblock %}
+
+{% block topbar_extra %}
+<a class="iconlink" href="{% url 'historico' %}">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </svg>
+  Histórico de atendimentos
+</a>
+{% endblock %}
+
+{% block content %}
+<main class="container">
+  <div class="eyebrow">Painel do professor</div>
+  <h1>Minha Grade</h1>
+  <p class="muted" style="margin:0 0 20px">Clique em qualquer célula para gerenciar o CA · use o lápis para editar o
+    horário</p>
+
+  <div class="card grade-wrap">
+    <table class="grade">
+      <thead>
+        <tr>
+          <th class="hora">Horário</th>
+          <th>Segunda</th>
+          <th>Terça</th>
+          <th>Quarta</th>
+          <th>Quinta</th>
+          <th>Sexta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="hora">07:00</th>
+          <td class="has-cell">
+            <a class="cell cell--ativo cell--edit" href="{% url 'painel_professor' %}">
+              <span class="cell__nome">Proj. Dev. Software</span>
+              <span class="cell__sub">INFO-3M</span>
+              <span class="cell__foot"><span class="badge badge--ativo">CA Ativo · 7 alunos</span></span>
+            </a>
+            <button type="button" class="cell__edit" title="Editar horário do CA" data-aula="1"
+              data-disc="Proj. Dev. Software" data-turma="INFO-3M" data-dia="0" data-ini="07:00" data-fim="07:45">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+            </button>
+          </td>
+          <td class="has-cell">
+            <a class="cell cell--pausado cell--edit" href="{% url 'painel_professor' %}">
+              <span class="cell__nome">Proj. Dev. Software</span>
+              <span class="cell__sub">INFO-2M</span>
+              <span class="cell__foot"><span class="badge badge--pausado">Pausado · 2 alunos</span></span>
+            </a>
+            <button type="button" class="cell__edit" title="Editar horário do CA" data-aula="2"
+              data-disc="Proj. Dev. Software" data-turma="INFO-2M" data-dia="1" data-ini="07:00" data-fim="07:45">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+            </button>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="hora">07:45</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="hora">08:30</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="intervalo">
+          <td colspan="6">Intervalo · 09:15 – 09:30</td>
+        </tr>
+        <tr>
+          <th class="hora">09:30</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="hora">10:15</th>
+          <td></td>
+          <td></td>
+          <td class="has-cell">
+            <a class="cell cell--agendado cell--edit" href="{% url 'painel_professor_nao_iniciado' %}">
+              <span class="cell__nome">Proj. Dev. Software</span>
+              <span class="cell__sub">INFO-1M</span>
+              <span class="cell__foot"><span class="badge badge--agendado">Agendado</span><br><span class="small"
+                  style="color:var(--blue)">4 dúvidas enviadas</span></span>
+            </a>
+            <button type="button" class="cell__edit" title="Editar horário do CA" data-aula="3"
+              data-disc="Proj. Dev. Software" data-turma="INFO-1M" data-dia="2" data-ini="10:15" data-fim="11:45">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+            </button>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="hora">11:00</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Modal do horário do CA: o POST vai para a própria página -->
+<div class="modal" id="modal-ca" role="dialog" aria-modal="true">
+  <form class="modal__box" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="aula_id" id="ca-aula">
+    <div class="modal__head">
+      <div>
+        <h2>✎ Horário do CA</h2>
+        <div class="small muted" id="ca-sub"></div>
+      </div>
+      <button type="button" class="modal__close" data-close-modal aria-label="Fechar">&times;</button>
+    </div>
+    <div class="field">
+      <label for="ca-dia">Dia da semana</label>
+      <select name="dia" id="ca-dia">
+        <option value="0">Segunda-feira</option>
+        <option value="1">Terça-feira</option>
+        <option value="2">Quarta-feira</option>
+        <option value="3">Quinta-feira</option>
+        <option value="4">Sexta-feira</option>
+      </select>
+    </div>
+    <div class="row field">
+      <div><label for="ca-inicio">Início</label><input class="input" type="time" name="inicio" id="ca-inicio"></div>
+      <div><label for="ca-fim">Fim</label><input class="input" type="time" name="fim" id="ca-fim"></div>
+    </div>
+    <div class="switch">
+      <input type="checkbox" name="sem_ca_semana" id="ca-sem">
+      <label for="ca-sem">Sem CA esta semana
+        <div class="small muted">Desativa pontualmente sem apagar o horário fixo cadastrado.</div>
+      </label>
+    </div>
+    <div class="modal__actions">
+      <button type="button" class="btn" data-close-modal>Cancelar</button>
+      <button type="submit" class="btn btn--primary">Salvar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/fila/grade_professor.js' %}"></script>
+{% endblock %}

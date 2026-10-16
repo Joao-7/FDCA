@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Fila · Proj. Dev. Software{% endblock %}
+
+{% block topbar_extra %}
+  <a class="iconlink" href="#" title="Notificações">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+    <span class="dot"></span>
+  </a>
+{% endblock %}
+
+{% block content %}
+<main class="container" style="max-width:640px">
+  <a class="back" href="{% url 'grade_aluno' %}">&larr; Voltar para Minha Grade</a>
+  <div class="eyebrow">INFO-3M</div>
+  <h1>Proj. Dev. Software</h1>
+
+  <section class="card posicao" style="margin:20px 0">
+    <div class="muted small">Sua posição na fila</div>
+    <div class="posicao__num">3º de 7 alunos</div>
+  </section>
+
+  {# Lista fixa de exemplo. Depois pode virar um laço for com os alunos que a view enviar #}
+  <section class="card">
+    <ul class="queue">
+      <li class="is-atual">
+        <span class="queue__pos">1</span>
+        <div class="queue__body"><div class="queue__nome">Beatriz Souza</div></div>
+        <span class="badge badge--ativo">Sendo atendido</span>
+      </li>
+      <li>
+        <span class="queue__pos">2</span>
+        <div class="queue__body"><div class="queue__nome">Lucas Ferreira <span class="tag">Enviada antecipadamente</span></div></div>
+      </li>
+      <li class="is-eu">
+        <span class="queue__pos">3</span>
+        <div class="queue__body"><div class="queue__nome">João Lucas </div></div>
+      </li>
+      <li>
+        <span class="queue__pos">4</span>
+        <div class="queue__body"><div class="queue__nome">Marina Dias</div></div>
+      </li>
+      <li>
+        <span class="queue__pos">5</span>
+        <div class="queue__body"><div class="queue__nome">Pedro Lima</div></div>
+      </li>
+      <li>
+        <span class="queue__pos">6</span>
+        <div class="queue__body"><div class="queue__nome">Julia Rocha</div></div>
+      </li>
+      <li>
+        <span class="queue__pos">7</span>
+        <div class="queue__body"><div class="queue__nome">Rafael Nunes</div></div>
+      </li>
+    </ul>
+  </section>
+
+  <button class="btn btn--danger btn--block" type="button" style="margin-top:20px" data-abrir-modal="modal-sair">Sair da fila</button> 
+</main>
+
+<!-- Confirmação de saída: o POST vai para a própria página -->
+<div class="modal" id="modal-sair" role="dialog" aria-modal="true">
+  <form class="modal__box" method="post" style="max-width:400px">
+    {% csrf_token %}
+    <div class="modal__head">
+      <h2>Sair da fila?</h2>
+      <button type="button" class="modal__close" data-close-modal aria-label="Fechar">&times;</button>
+    </div>
+    <p class="muted" style="margin:0">Você perde sua posição atual e sua dúvida será descartada.</p>
+    <div class="modal__actions">
+      <button type="button" class="btn" data-close-modal>Continuar na fila</button>
+      <button type="submit" class="btn btn--danger">Sair da fila</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

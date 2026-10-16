@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Atendimento 08/10/2026 · FDCA{% endblock %}
+
+{% block content %}
+<main class="container" style="max-width:680px">
+  <a class="back" href="{% url 'historico' %}">&larr; Voltar para o histórico</a>
+  <div class="eyebrow">INFO-2M</div>
+  <h1>Proj. Dev. Software</h1>
+  <p class="muted" style="margin:0 0 20px">08/10/2026 · Quarta · 10:15–11:45</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <section class="card" style="margin-bottom:20px">
+      <ul class="queue">
+        <li style="align-items:flex-start">
+          <div class="queue__body">
+            <div class="queue__nome">Beatriz Souza <span class="badge badge--presente">Presente</span></div>
+            <div class="queue__duvida">Padrão MVC na camada de serviço.</div>
+            <textarea name="comentario_1" style="margin-top:8px;min-height:56px"
+              placeholder="Adicionar comentário sobre este aluno..."></textarea>
+          </div>
+        </li>
+        <li style="align-items:flex-start">
+          <div class="queue__body">
+            <div class="queue__nome">Lucas Ferreira <span class="badge badge--presente">Presente</span></div>
+            <div class="queue__duvida">Injeção de dependência.</div>
+            <textarea name="comentario_2" style="margin-top:8px;min-height:56px"
+              placeholder="Adicionar comentário sobre este aluno...">Reforçar com exercício.</textarea>
+          </div>
+        </li>
+        <li style="align-items:flex-start">
+          <div class="queue__body">
+            <div class="queue__nome">Marina Dias <span class="badge badge--ausente">Ausente</span></div>
+            <div class="queue__duvida">Organização dos repositórios.</div>
+            <textarea name="comentario_3" style="margin-top:8px;min-height:56px"
+              placeholder="Adicionar comentário sobre este aluno..."></textarea>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <div class="field">
+      <label for="comentario_geral">Comentário geral do atendimento</label>
+      <textarea id="comentario_geral" name="comentario_geral"
+        placeholder="Observações sobre este CA">Muitas dúvidas sobre o padrão MVC.</textarea>
+    </div>
+    <button class="btn btn--primary" type="submit">Salvar comentários</button>
+  </form>
+</main>
+{% endblock %}

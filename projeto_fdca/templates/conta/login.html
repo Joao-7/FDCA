@@ -1,48 +1,36 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
+{% block title %}Entrar · FDCA{% endblock %}
 
-{% block title %}FDCA - Login{% endblock %}
+{# Esta página não tem a barra de cima, então esvaziamos o bloco "topbar" do base #}
+{% block topbar %}{% endblock %}
 
 {% block content %}
-
-<div class="container">
+<main class="login">
+  <div class="login__box">
     <div class="logo">
-        <svg viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
     </div>
     <h1>FDCA</h1>
-    <p class="subtitle">Fila Digital do Centro de Aprendizagem</p>
+    <p class="muted" style="margin:0">Fila Digital do Centro de Aprendizagem</p>
 
-    <div class="card">
+    <form class="card login__card" method="post">
+      {% csrf_token %}
 
-        {% if form.non_field_errors %}
-            <div class="error">{{ form.non_field_errors.0 }}</div>
-        {% endif %}
+      {# "erro" é uma variável que a view envia quando o login falha. Se não vier, a caixa não aparece #}
+      {% if erro %}<div class="alert">{{ erro }}</div>{% endif %}
 
-        <div class="tabs">
-            <button type="button" class="tab active" data-perfil="aluno" onclick="selecionarPerfil('aluno', this)">Aluno</button>
-            <button type="button" class="tab" data-perfil="professor" onclick="selecionarPerfil('professor', this)">Professor</button>
-        </div>
+      <div class="field">
+        <label for="matricula">Matrícula</label>
+        <input class="input" id="matricula" name="matricula" type="text" inputmode="numeric" placeholder="Ex: 20241164010000" required autofocus>
+      </div>
+      <div class="field">
+        <label for="senha">Senha</label>
+        <input class="input" id="senha" name="senha" type="password" placeholder="••••••••" required>
+      </div>
+      <button class="btn btn--primary btn--block" type="submit">Entrar</button>
+    </form>
 
-        <form method="post" action="{% url 'painel_aluno' %}">
-            {% csrf_token %}
-            <input type="hidden" name="perfil" id="perfil" value="aluno">
-
-            <label id="label-identificador">Matrícula ou e-mail</label>
-            <input type="text" name="identificador" id="identificador"
-                   placeholder="Ex: 20241164010000" autofocus autocomplete="username" required>
-
-            <label>Senha</label>
-            <input type="password" name="senha" placeholder="••••••••" autocomplete="current-password" required>
-
-            <button type="submit" class="entrar">Entrar</button>
-        </form>
-    </div>
-
-    <p class="footer">Instituto Federal do Rio Grande do Norte &middot; Sistema FDCA v1.0</p>
-</div>
-
-{% endblock %}
-
-{% block scripts %}
-    <script src="{% static 'js/main.js' %}"></script>
+    <p class="login__hint">O sistema identifica seu perfil pela matrícula automaticamente.</p>
+  </div>
+</main>
 {% endblock %}

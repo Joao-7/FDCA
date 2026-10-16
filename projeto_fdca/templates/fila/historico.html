@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Histórico de atendimentos · FDCA{% endblock %}
+
+{% block content %}
+<main class="container" style="max-width:680px">
+  <a class="back" href="{% url 'grade_professor' %}">&larr; Voltar para Minha Grade</a>
+  <div class="eyebrow">Professor</div>
+  <h1>Histórico de atendimentos</h1>
+  <p class="muted" style="margin:0 0 20px">CAs anteriores, alunos atendidos e comentários</p>
+
+  <div class="filters">
+    <select aria-label="Filtrar por disciplina">
+      <option>Todas as disciplinas</option>
+      <option>Proj. Dev. Software</option>
+    </select>
+    <span class="muted">3 registros</span>
+  </div>
+
+  <a class="card hist-item" href="{% url 'historico_detalhe' %}">
+    <div class="hist-item__title">Proj. Dev. Software <span class="badge badge--turma">INFO-2M</span></div>
+    <div class="muted">08/10/2026 · Quarta · 10:15–11:45</div>
+    <div class="hist-item__badges">
+      <span class="badge badge--presente">2 presentes</span>
+      <span class="badge badge--ausente">1 ausente</span>
+    </div>
+    <div class="small muted">"Muitas dúvidas sobre o padrão MVC."</div>
+    <span class="hist-item__chev">&rsaquo;</span>
+  </a>
+
+  <a class="card hist-item" href="{% url 'historico_detalhe' %}">
+    <div class="hist-item__title">Proj. Dev. Software <span class="badge badge--turma">INFO-3M</span></div>
+    <div class="muted">07/10/2026 · Terça · 07:00–08:30</div>
+    <div class="hist-item__badges">
+      <span class="badge badge--presente">3 presentes</span>
+      <span class="badge badge--ausente">1 ausente</span>
+    </div>
+    <span class="hist-item__chev">&rsaquo;</span>
+  </a>
+
+  <a class="card hist-item" href="{% url 'historico_detalhe' %}">
+    <div class="hist-item__title">Proj. Dev. Software <span class="badge badge--turma">INFO-1M</span></div>
+    <div class="muted">02/10/2026 · Quarta · 10:15–11:45</div>
+    <div class="hist-item__badges">
+      <span class="badge badge--presente">2 presentes</span>
+      <span class="badge badge--ausente">0 ausentes</span>
+    </div>
+    <div class="small muted">"Turma iniciante, dúvidas básicas de Java."</div>
+    <span class="hist-item__chev">&rsaquo;</span>
+  </a>
+</main>
+{% endblock %}

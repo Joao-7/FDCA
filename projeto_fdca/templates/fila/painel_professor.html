@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{%load static%}
+{% block title %}Painel · Proj. Dev. Software INFO-3M{% endblock %}
+
+{% block content %}
+<main class="container" style="max-width:760px">
+  <a class="back" href="{% url 'grade_professor' %}">&larr; Voltar para Minha Grade</a>
+
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">INFO-3M</div>
+      <h1>Proj. Dev. Software</h1>
+      <span class="status status--ativo">Atendimento ativo</span>
+    </div>
+    <div style="text-align:right">
+      <div class="counter">4/10</div>
+      <div class="small muted">alunos na fila</div>
+    </div>
+  </div>
+
+  <!-- Todos os botões enviam POST para esta página. O botão clicado manda seu "value" no campo "acao" -->
+  <form method="post">
+    {% csrf_token %}
+    <section class="card">
+      <ul class="queue">
+        <li>
+          <input type="checkbox" name="selecionados" value="1" class="sel" aria-label="Selecionar Beatriz Souza">
+          <span class="queue__pos">1</span>
+          <div class="queue__body">
+            <div class="queue__nome">Beatriz Souza <span class="tag">Enviada antecipadamente</span></div>
+            <div class="queue__duvida">Como aplicar o padrão MVC na camada de serviço?</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox" name="selecionados" value="2" class="sel" aria-label="Selecionar Lucas Ferreira">
+          <span class="queue__pos">2</span>
+          <div class="queue__body">
+            <div class="queue__nome">Lucas Ferreira <span class="tag">Enviada antecipadamente</span></div>
+            <div class="queue__duvida">Dúvida sobre injeção de dependência.</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox" name="selecionados" value="3" class="sel" aria-label="Selecionar João Lucas">
+          <span class="queue__pos">3</span>
+          <div class="queue__body">
+            <div class="queue__nome">João Lucas</div>
+            <div class="queue__duvida">Não entendi o diagrama de classes.</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox" name="selecionados" value="4" class="sel" aria-label="Selecionar Marina Dias">
+          <span class="queue__pos">4</span>
+          <div class="queue__body">
+            <div class="queue__nome">Marina Dias</div>
+            <div class="queue__duvida">Como organizar os repositórios?</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <div class="actions">
+      <button class="btn btn--primary" type="submit" name="acao" value="chamar" id="btn-chamar" disabled>Chamar
+        selecionados</button>
+      <button class="btn" type="submit" name="acao" value="ausente" id="btn-ausente" disabled>Marcar ausente</button>
+      <button class="btn" type="submit" name="acao" value="pausar">Pausar atendimento</button>
+      <button class="btn btn--danger" type="button" data-abrir-modal="modal-encerrar">Encerrar atendimento</button>
+    </div>
+  </form>
+</main>
+
+<!-- Resumo ao encerrar: lista de presença, resumo das dúvidas e comentário -->
+<div class="modal" id="modal-encerrar" role="dialog" aria-modal="true">
+  <form class="modal__box modal__box--wide" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="acao" value="encerrar">
+    <div class="modal__head">
+      <div>
+        <h2>Encerrar atendimento</h2>
+        <div class="small muted">Proj. Dev. Software · INFO-3M</div>
+      </div>
+      <button type="button" class="modal__close" data-close-modal aria-label="Fechar">&times;</button>
+    </div>
+
+    <label>Lista de presença</label>
+    <div class="card" style="margin-bottom:16px">
+      <ul class="queue">
+        <li>
+          <div class="queue__body">
+            <div class="queue__nome">Beatriz Souza</div>
+          </div>
+          <div class="presenca">
+            <label><input type="radio" name="presenca_1" value="presente" checked> Presente</label>
+            <label><input type="radio" name="presenca_1" value="ausente"> Ausente</label>
+          </div>
+        </li>
+        <li>
+          <div class="queue__body">
+            <div class="queue__nome">Lucas Ferreira</div>
+          </div>
+          <div class="presenca">
+            <label><input type="radio" name="presenca_2" value="presente" checked> Presente</label>
+            <label><input type="radio" name="presenca_2" value="ausente"> Ausente</label>
+          </div>
+        </li>
+        <li>
+          <div class="queue__body">
+            <div class="queue__nome">João Lucas</div>
+          </div>
+          <div class="presenca">
+            <label><input type="radio" name="presenca_3" value="presente"> Presente</label>
+            <label><input type="radio" name="presenca_3" value="ausente" checked> Ausente</label>
+          </div>
+        </li>
+        <li>
+          <div class="queue__body">
+            <div class="queue__nome">Marina Dias</div>
+          </div>
+          <div class="presenca">
+            <label><input type="radio" name="presenca_4" value="presente"> Presente</label>
+            <label><input type="radio" name="presenca_4" value="ausente" checked> Ausente</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="field">
+      <label for="resumo">Resumo das dúvidas</label>
+      <textarea id="resumo" name="resumo" placeholder="Ex: Muitas dúvidas sobre o padrão MVC."></textarea>
+    </div>
+    <div class="field">
+      <label for="comentario">Comentário <span class="muted">(opcional)</span></label>
+      <textarea id="comentario" name="comentario" placeholder="Observações sobre o atendimento"></textarea>
+    </div>
+
+    <div class="modal__actions">
+      <button type="button" class="btn" data-close-modal>Cancelar</button>
+      <button type="submit" class="btn btn--primary">Salvar registro</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/fila/painel_professor.js' %}"></script> 
+{% endblock %}

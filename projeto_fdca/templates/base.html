@@ -1,14 +1,57 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
-    <title>{% block title %}FDCA{% endblock %}</title>
-</head>
-<body>
-    {% block content %}{% endblock %}  
 
-    {% block scripts %}{% endblock %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FDCA{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/global.css' %}">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cstyle%3E@media(prefers-color-scheme:dark){path{stroke:white}}%3C/style%3E%3Cpath d='M22 10L12 5 2 10l10 5 10-5z'/%3E%3Cpath d='M6 12v5c3 3 9 3 12 0v-5'/%3E%3C/svg%3E" />
+</head>
+
+<body>
+
+  {% block topbar %}
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand">
+        <span class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M22 10L12 5 2 10l10 5 10-5z" />
+            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+          </svg>
+        </span>
+        FDCA
+      </div>
+      <div class="topbar__actions">
+        {% block topbar_extra %}{% endblock %}
+
+        {# Sair é um formulário POST (e não um link) porque o logout do Django exige POST nas versões novas #}
+        <form method="post" action="{% url 'logout' %}" style="margin:0">
+          {% csrf_token %}
+          <button type="submit" class="iconlink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <path d="M16 17l5-5-5-5" />
+              <path d="M21 12H9" />
+            </svg>
+            Sair
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+  {% endblock %}
+
+  {% block content %}{% endblock %}
+
+  <script src="{% static 'js/fdca.js' %}"></script>
+  {% block scripts %}{% endblock %}
 </body>
+
 </html>

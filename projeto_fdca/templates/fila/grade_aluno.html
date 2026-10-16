@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{%load static%}
+{% block title %}Minha Grade · FDCA{% endblock %}
+
+{% block topbar_extra %}
+<a class="iconlink" href="#" title="Notificações">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+    <path d="M13.7 21a2 2 0 0 1-3.4 0" />
+  </svg>
+  <span class="dot"></span>
+</a>
+{% endblock %}
+
+{% block content %}
+<main class="container">
+  <div class="eyebrow">INFO-3M</div>
+  <h1>Minha Grade</h1>
+  <p class="muted" style="margin:0 0 20px">Clique em qualquer disciplina para registrar uma dúvida — mesmo antes do CA
+    abrir</p>
+
+  <div class="card grade-wrap">
+    <table class="grade">
+      <thead>
+        <tr>
+          <th class="hora">Horário</th>
+          <th>Segunda</th>
+          <th>Terça</th>
+          <th>Quarta</th>
+          <th>Quinta</th>
+          <th>Sexta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="hora">07:00</th>
+          <td><button type="button" class="cell cell--ativo" data-aula="1" data-disc="Proj. Dev. Software"
+              data-status="ativo">
+              <span class="cell__top"><span class="cell__nome">Proj. Dev. Software</span><span
+                  class="badge badge--ativo">CA Ativo</span></span>
+              <span class="cell__sub">Prof. Carlos Medeiros</span><span class="cell__foot">7 na fila</span></button>
+          </td>
+          <td><button type="button" class="cell cell--agendado" data-aula="2" data-disc="Proj. Dev. Software"
+              data-status="agendado">
+              <span class="cell__top"><span class="cell__nome">Proj. Dev. Software</span><span
+                  class="badge badge--agendado">Agendado</span></span>
+              <span class="cell__sub">Prof. Carlos Medeiros</span><span class="cell__foot">Sex 14:00</span></button>
+          </td>
+          <td></td>
+          <td><button type="button" class="cell cell--ativo" data-aula="3" data-disc="Autoria Web" data-status="ativo">
+              <span class="cell__top"><span class="cell__nome">Autoria Web</span><span class="badge badge--ativo">CA
+                  Ativo</span></span>
+              <span class="cell__sub">Prof. Ana Lima</span><span class="cell__foot">3 na fila</span></button></td>
+          <td><button type="button" class="cell cell--sem_ca" data-aula="4" data-disc="Autoria Web"
+              data-status="sem_ca">
+              <span class="cell__top"><span class="cell__nome">Autoria Web</span></span>
+              <span class="cell__sub">Prof. Ana Lima</span><span class="cell__foot">Sem CA no momento</span></button>
+          </td>
+        </tr>
+        <tr>
+          <th class="hora">07:45</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="hora">08:30</th>
+          <td><button type="button" class="cell cell--pausado" data-aula="5" data-disc="Banco de Dados"
+              data-status="pausado">
+              <span class="cell__top"><span class="cell__nome">Banco de Dados</span><span
+                  class="badge badge--pausado">Pausado</span></span>
+              <span class="cell__sub">Prof. Fernanda Costa</span><span class="cell__foot">Atendimento
+                pausado</span></button></td>
+          <td><button type="button" class="cell cell--sem_ca" data-aula="6" data-disc="Redes de Computadores"
+              data-status="sem_ca">
+              <span class="cell__top"><span class="cell__nome">Redes de Computadores</span></span>
+              <span class="cell__sub">Prof. João Santos</span><span class="cell__foot">Sem CA no momento</span></button>
+          </td>
+          <td></td>
+          <td><button type="button" class="cell cell--agendado" data-aula="7" data-disc="POO" data-status="agendado">
+              <span class="cell__top"><span class="cell__nome">POO</span><span
+                  class="badge badge--agendado">Agendado</span></span>
+              <span class="cell__sub">Prof. Ricardo Alves</span><span class="cell__foot">Qui 09:30</span></button></td>
+          <td></td>
+        </tr>
+        <tr class="intervalo">
+          <td colspan="6">Intervalo · 09:15 – 09:30</td>
+        </tr>
+        <tr>
+          <th class="hora">09:30</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="hora">10:15</th>
+          <td></td>
+          <td><button type="button" class="cell cell--sem_ca" data-aula="8" data-disc="IHC" data-status="sem_ca">
+              <span class="cell__top"><span class="cell__nome">IHC</span></span>
+              <span class="cell__sub">Prof. Maria Oliveira</span><span class="cell__foot">Sem CA no
+                momento</span></button></td>
+          <td></td>
+          <td></td>
+          <td><button type="button" class="cell cell--agendado" data-aula="9" data-disc="Banco de Dados"
+              data-status="agendado">
+              <span class="cell__top"><span class="cell__nome">Banco de Dados</span><span
+                  class="badge badge--agendado">Agendado</span></span>
+              <span class="cell__sub">Prof. Fernanda Costa</span><span class="cell__foot">Sex 10:15</span></button></td>
+        </tr>
+        <tr>
+          <th class="hora">11:00</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Modal da dúvida. Sem "action", o formulário envia o POST para a própria página -->
+<div class="modal" id="modal-duvida" role="dialog" aria-modal="true" aria-labelledby="duvida-titulo">
+  <form class="modal__box" method="post" action={% url 'fila_aluno' %}>
+    {% csrf_token %}
+    <input type="hidden" name="aula_id" id="duvida-aula">
+    <div class="modal__head">
+      <div>
+        <div class="small muted" id="duvida-disciplina"></div>
+        <h2 id="duvida-titulo">Qual é a sua dúvida?</h2>
+      </div>
+      <button type="button" class="modal__close" data-close-modal aria-label="Fechar">&times;</button>
+    </div>
+    <div class="notice is-hidden" id="duvida-aviso">
+      O atendimento ainda não começou. Sua dúvida ficará registrada e você entrará na fila assim que o professor abrir o
+      CA.
+    </div>
+    <p class="muted" style="margin:0 0 10px">Descreva brevemente para que o professor possa se preparar.</p>
+    <textarea name="duvida" id="duvida-texto"
+      placeholder="Ex: Tenho dúvida sobre como aplicar o padrão MVC na camada de serviço..."></textarea>
+    <div class="modal__actions">
+      <button type="button" class="btn" data-close-modal>Cancelar</button>
+      <button type="submit" class="btn btn--primary" id="duvida-enviar" disabled>Entrar na fila</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/fila/grade_aluno.js' %}"></script> 
+{% endblock %}
