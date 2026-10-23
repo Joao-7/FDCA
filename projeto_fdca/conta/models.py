@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-
 class Perfil(models.Model):
     """
     Perfil extra do usuário do sistema FDCA.

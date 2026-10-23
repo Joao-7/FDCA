@@ -1,15 +1,18 @@
-from django.shortcuts import render
-
-def login_view(request):
-    return render(request, "conta/login.html")
-
+from django.contrib.auth import login
 from django.shortcuts import render, redirect
 
+from .forms import LoginForm
+from .models import Perfil
+
 def login_view(request):
-    if request.method == "POST":
-        matricula = request.POST.get("matricula", "")
-        # PROVISÓRIO: matrícula que começa com "P" vai para professor, qualquer outra para aluno
-        if matricula.upper().startswith("P"):
+    form = LoginForm(request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        login(request, form.usuario)
+        if form.perfil.tipo == Perfil.TIPO_PROFESSOR:
             return redirect("grade_professor")
         return redirect("grade_aluno")
-    return render(request, "conta/login.html")
+
+    # o template mostra a variável "erro" na caixa vermelha
+    erro = next(iter(form.non_field_errors()), None) if request.method == "POST" else None
+    return render(request, "conta/login.html", {"erro": erro})

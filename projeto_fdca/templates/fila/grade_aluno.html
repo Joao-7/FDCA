@@ -125,8 +125,9 @@
   </div>
 </main>
 
-<!-- Modal da dúvida. Sem "action", o formulário envia o POST para a própria página -->
+
 <div class="modal" id="modal-duvida" role="dialog" aria-modal="true" aria-labelledby="duvida-titulo">
+
   <form class="modal__box" method="post" action={% url 'fila_aluno' %}>
     {% csrf_token %}
     <input type="hidden" name="aula_id" id="duvida-aula">

@@ -64,10 +64,11 @@ class ItemFila(models.Model):
     STATUS_ATENDIDO = 'atendido'
     STATUS_AUSENTE = 'ausente'
     STATUS_DESISTIU = 'desistiu'
+    
     STATUS_CHOICES = [
         (STATUS_AGUARDANDO, 'Aguardando'),
         (STATUS_CHAMADO, 'Chamado'),
-        (STATUS_ATENDIDO, 'Atendido'),
+        (STATUS_ATENDIDO, 'Atendido'), 
         (STATUS_AUSENTE, 'Ausente'),
         (STATUS_DESISTIU, 'Desistiu'),
     ]

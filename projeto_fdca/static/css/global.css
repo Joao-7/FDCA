@@ -31,6 +31,9 @@ body {
   color: var(--text);
   font-size: 14px;
   line-height: 1.45;
+  min-height: 100vh;         
+  display: flex;              
+  flex-direction: column;
 }
 
 a {
@@ -886,4 +889,149 @@ textarea {
 
 .cell__nome {
   min-width: 0;
+}
+
+/*Footer*/
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+}
+
+.site-footer {
+  background: #1f2937;
+  color: #e5e7eb;
+  border-top: 3px solid #2563eb;
+  margin-top: auto;
+  font-family: "Open Sans", "Inter", system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.footer__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer__brand {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.footer__brand strong {
+  color: #60a5fa;
+  letter-spacing: 0.02em;
+}
+
+.footer__info {
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.footer__sep {
+  opacity: 0.5;
+}
+
+.footer__links {
+  display: flex;
+  gap: 16px;
+}
+
+.footer__links a {
+  color: #d1d5db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.footer__links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .grade-wrap {
+    overflow-x: visible;
+    border: none;
+    background: transparent;
+  }
+
+  .grade {
+    min-width: 0;
+    width: 100%;
+    display: block;
+  }
+
+  .grade thead {
+    display: none; /* esconde o cabeçalho da tabela */
+  }
+
+  .grade tbody,
+  .grade tr,
+  .grade td,
+  .grade th.hora {
+    display: block;
+    width: 100%;
+  }
+
+  .grade tr {
+    margin-bottom: 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .grade th.hora {
+    background: #f8fafc;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+
+  .grade td {
+    height: auto;
+    padding: 0;
+    border: none;
+  }
+
+  .grade td:empty {
+    display: none; /* esconde células vazias */
+  }
+
+  .cell {
+    min-height: auto;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #f1f2f4;
+    padding: 14px 16px;
+  }
+
+  .cell:last-child {
+    border-bottom: none;
+  }
+
+  .cell__nome {
+    font-size: 15px;
+  }
+
+  .cell__sub,
+  .cell__foot {
+    font-size: 13px;
+  }
 }
