@@ -61,7 +61,7 @@ Agora é só dar o play no sistema:
 ```bash
 python manage.py runserver
 ```
-Abra o seu navegador e acesse: `http://127.0.0`
+Abra o seu navegador e acesse: `http://127.0.0.1:8000`
 
 ---
 

@@ -5,10 +5,7 @@ from django.utils import timezone
 
 
 class Atendimento(models.Model):
-    """
-    Sessão de Centro de Aprendizagem (C.A.) de uma turma.
-    O professor controla o status (agendado, ativo, pausado, etc.).
-    """
+    """Sessão de C.A. de uma turma, em uma data."""
     STATUS_AGENDADO = 'agendado'
     STATUS_ATIVO = 'ativo'
     STATUS_PAUSADO = 'pausado'
@@ -22,53 +19,51 @@ class Atendimento(models.Model):
         (STATUS_CANCELADO, 'Cancelado'),
     ]
 
-    DIA_CHOICES = [
-        (0, 'Segunda-feira'),
-        (1, 'Terça-feira'),
-        (2, 'Quarta-feira'),
-        (3, 'Quinta-feira'),
-        (4, 'Sexta-feira'),
-    ]
-
     professor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='atendimentos_fdca'
+        on_delete=models.PROTECT,
+        related_name='atendimentos_fdca',
+    )
+    turma = models.ForeignKey(
+        'conta.Turma',
+        on_delete=models.PROTECT,
+        related_name='atendimentos',
     )
     disciplina = models.CharField(max_length=120)
-    turma = models.CharField(max_length=30)
-    dia = models.PositiveSmallIntegerField(choices=DIA_CHOICES)
+    data = models.DateField()
     inicio = models.TimeField()
     fim = models.TimeField()
+    vagas = models.PositiveSmallIntegerField(default=10)
     status = models.CharField(max_length=12, choices=STATUS_CHOICES, default=STATUS_AGENDADO)
-    data_excecao = models.DateField(blank=True, null=True)  # para cancelar um dia específico
     resumo = models.TextField(blank=True)
     comentario = models.TextField(blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
     encerrado_em = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        ordering = ['dia', 'inicio']
+        ordering = ['data', 'inicio']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['turma', 'data', 'inicio'],
+                name='fdca_horario_unico_por_turma',
+            )
+        ]
 
     def __str__(self):
-        return f'{self.disciplina} - {self.turma} ({self.get_dia_display()})'
+        return f'{self.disciplina} - {self.turma} ({self.data:%d/%m/%Y})'
 
 
 class ItemFila(models.Model):
-    """
-    Um aluno na fila de um atendimento.
-    A ordem é pela data de criação (FIFO - quem chegou primeiro).
-    """
+    """Um aluno na fila de um atendimento. Ordem por chegada (FIFO)."""
     STATUS_AGUARDANDO = 'aguardando'
     STATUS_CHAMADO = 'chamado'
     STATUS_ATENDIDO = 'atendido'
     STATUS_AUSENTE = 'ausente'
     STATUS_DESISTIU = 'desistiu'
-    
     STATUS_CHOICES = [
         (STATUS_AGUARDANDO, 'Aguardando'),
         (STATUS_CHAMADO, 'Chamado'),
-        (STATUS_ATENDIDO, 'Atendido'), 
+        (STATUS_ATENDIDO, 'Atendido'),
         (STATUS_AUSENTE, 'Ausente'),
         (STATUS_DESISTIU, 'Desistiu'),
     ]
@@ -76,12 +71,12 @@ class ItemFila(models.Model):
     atendimento = models.ForeignKey(
         Atendimento,
         on_delete=models.CASCADE,
-        related_name='itens'
+        related_name='itens',
     )
     aluno = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='itens_fila_fdca'
+        related_name='itens_fila_fdca',
     )
     duvida = models.TextField(blank=True)
     status = models.CharField(max_length=12, choices=STATUS_CHOICES, default=STATUS_AGUARDANDO)
@@ -95,7 +90,7 @@ class ItemFila(models.Model):
             models.UniqueConstraint(
                 fields=['atendimento', 'aluno'],
                 condition=Q(status__in=['aguardando', 'chamado']),
-                name='fdca_aluno_unico_na_fila_ativa'
+                name='fdca_aluno_unico_na_fila_ativa',
             )
         ]
 
