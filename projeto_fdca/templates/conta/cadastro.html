@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Criar conta | FDCA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+
+                    <h1 class="h3 fw-bold text-primary text-center mb-1">Criar conta</h1>
+                    <p class="text-muted text-center mb-4">Preencha os dados para acessar o sistema</p>
+
+                    {% comment %}
+                        method="POST": formulários que enviam dados (cadastro, login, fila) usam POST,
+                        porque os dados vão no corpo da requisição e não aparecem na URL.
+                        csrf_token: obrigatório em todo formulário POST do Django. Sem ele,
+                        o Django recusa o envio com erro 403.
+                    {% endcomment %}
+                    <form method="POST" action="{% url 'cadastro' %}">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger py-2" role="alert">
+                                {% for erro in form.non_field_errors %}
+                                    <div>{{ erro }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.nome.id_for_label }}" class="form-label fw-semibold">{{ form.nome.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                {{ form.nome }}
+                            </div>
+                            {% for erro in form.nome.errors %}
+                                <div class="text-danger small mt-1">{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold">{{ form.email.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                                {{ form.email }}
+                            </div>
+                            {% for erro in form.email.errors %}
+                                <div class="text-danger small mt-1">{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.matricula.id_for_label }}" class="form-label fw-semibold">{{ form.matricula.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                {{ form.matricula }}
+                            </div>
+                            {% for erro in form.matricula.errors %}
+                                <div class="text-danger small mt-1">{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.tipo.id_for_label }}" class="form-label fw-semibold">{{ form.tipo.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                                {{ form.tipo }}
+                            </div>
+                            {% for erro in form.tipo.errors %}
+                                <div class="text-danger small mt-1">{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.senha.id_for_label }}" class="form-label fw-semibold">{{ form.senha.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                {{ form.senha }}
+                                <button type="button" class="btn btn-outline-secondary" data-alternar-senha="{{ form.senha.id_for_label }}" aria-label="Mostrar senha">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            {% for erro in form.senha.errors %}
+                                <div class="text-danger small mt-1">{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.confirmar_senha.id_for_label }}" class="form-label fw-semibold">{{ form.confirmar_senha.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                {{ form.confirmar_senha }}
+                                <button type="button" class="btn btn-outline-secondary" data-alternar-senha="{{ form.confirmar_senha.id_for_label }}" aria-label="Mostrar senha">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            {% for erro in form.confirmar_senha.errors %}
+                                <div class="text-danger small mt-1">{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-person-plus me-1"></i>
+                                Criar conta
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+                    <p class="text-center text-muted mb-0">
+                        Já tem uma conta? <a href="{% url 'login' %}" class="fw-semibold text-decoration-none">Entrar</a>
+                    </p>
+
+                </div>
+            </div>
+            <p class="text-center text-muted small mt-3">FDCA</p>
+        </div>
+    </div>
+</main>
+
+<script>
+    // botão do olho: mostra ou esconde o texto digitado nos campos de senha
+    document.querySelectorAll("[data-alternar-senha]").forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            var campo = document.getElementById(botao.dataset.alternarSenha);
+            var mostrar = campo.type === "password";
+            campo.type = mostrar ? "text" : "password";
+            botao.querySelector("i").className = mostrar ? "bi bi-eye-slash" : "bi bi-eye";
+            botao.setAttribute("aria-label", mostrar ? "Ocultar senha" : "Mostrar senha");
+        });
+    });
+</script>
+</body>
+</html>
